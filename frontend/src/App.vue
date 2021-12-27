@@ -1,20 +1,18 @@
 <template>
   <div>
     <!-- NAVBAR -->
-    <nav>
-      <b-navbar type="dark" variant="dark">
-        <b-navbar-brand class="px-2">
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="containter-fluid">
+        <span class="navbar-brand">
           <span class="px-2"
             ><b-icon-grid3x3-gap-fill></b-icon-grid3x3-gap-fill
           ></span>
           Album Grid
-        </b-navbar-brand>
-        <b-navbar-nav>
-          <b-nav-text class="d-none d-md-block"
-            >Find the albums of your favourite artists!</b-nav-text
-          >
-        </b-navbar-nav>
-      </b-navbar>
+        </span>
+        <span class="navbar-text d-none d-md-inline">
+          Find the albums of your favourite artists!
+        </span>
+      </div>
     </nav>
 
     <!-- SEARCH SECTION -->
@@ -54,11 +52,22 @@
     <section id="results" class="mt-5">
       <div class="container">
         <div class="row justify-content-center justify-content-md-between">
-          <div class="card my-2 mx-2" v-for="album in albums" :key="album.collectionName" style="width: 18rem">
-            <img class="card-img-top" :src="album.artworkUrl100" alt="Album cover image" />
+          <div
+            class="card my-2 mx-2"
+            v-for="album in albums"
+            :key="album.collectionName"
+            style="width: 18rem"
+          >
+            <img
+              class="card-img-top"
+              :src="album.artworkUrl100"
+              alt="Album cover image"
+            />
             <div class="card-body">
-              <p class="card-title">{{album.collectionName}}</p>
-              <p class="card-text"><small class="text-muted">{{album.artistName}}</small></p>
+              <p class="card-title">{{ album.collectionName }}</p>
+              <p class="card-text">
+                <small class="text-muted">{{ album.artistName }}</small>
+              </p>
             </div>
           </div>
         </div>
@@ -82,7 +91,10 @@ export default {
       axios
         .get("http://localhost:3000/bad+bunny")
         .then((response) => {
-          response.data.forEach(x => x.artworkUrl100 = x.artworkUrl100.replace('100x100', '300x300'))
+          response.data.forEach(
+            (x) =>
+              (x.artworkUrl100 = x.artworkUrl100.replace("100x100", "300x300"))
+          );
           this.albums = response.data;
         })
         .catch((err) => console.log(err));
