@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class="fill">
     <!-- NAVBAR -->
-    <nav class="navbar navbar-dark bg-dark">
-      <div class="containter-fluid">
-        <span class="navbar-brand">
-          <span class="px-2"
+    <nav class="navbar static-top navbar-dark bg-dark">
+      <div class="containter">
+        <span class="navbar-brand align-bottom">
+          <span class="px-2 text-light align-text-bottom"
             ><b-icon-grid3x3-gap-fill></b-icon-grid3x3-gap-fill
           ></span>
           Album Grid
         </span>
-        <span class="navbar-text d-none d-md-inline">
+        <span class="navbar-text d-none d-md-inline align-text-bottom">
           Find the albums of your favourite artists!
         </span>
       </div>
@@ -17,7 +17,7 @@
 
     <!-- SEARCH SECTION -->
     <section id="search" class="">
-      <div class="container">
+      <div class="container align-items-center">
         <div class="row mt-4">
           <div class="col">
             <h1 class="text-light">Find your albums:</h1>
@@ -30,6 +30,8 @@
               type="text"
               placeholder="Search by artist name"
               aria-describedby="search-button"
+              v-model="searchterm"
+              @keyup.enter="getAlbums"
             />
           </div>
         </div>
@@ -50,6 +52,10 @@
 
     <!-- RESULTS SECTION -->
     <section id="results" class="mt-5">
+      <div v-if="loading" class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status"></div>
+      </div>
+
       <div class="container">
         <div class="row justify-content-center justify-content-md-between">
           <div
@@ -83,19 +89,23 @@ export default {
   name: "App",
   data() {
     return {
-      albums: [{ collectionName: "one" }, { collectionName: "two" }],
+      loading: false,
+      albums: [],
+      searchterm: "",
     };
   },
   methods: {
-    getAlbums: async function (artist) {
+    getAlbums: async function () {
+      this.loading = true;
       axios
-        .get("http://localhost:3000/bad+bunny")
+        .get(`http://localhost:3000/${this.searchterm.replace(" ", "+")}`)
         .then((response) => {
           response.data.forEach(
             (x) =>
               (x.artworkUrl100 = x.artworkUrl100.replace("100x100", "300x300"))
           );
           this.albums = response.data;
+          this.loading = false;
         })
         .catch((err) => console.log(err));
     },
