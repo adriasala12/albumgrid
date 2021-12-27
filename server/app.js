@@ -5,6 +5,11 @@ import fetch from 'node-fetch';
 // Express.js instance setup
 const app = express();
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    next();
+})
+
 app.get("/:artist", async (req, res) => {
     var albums = await getAlbums(req.params.artist);
     res.json(albums)
