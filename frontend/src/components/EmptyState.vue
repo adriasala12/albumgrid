@@ -4,7 +4,7 @@
       <h1><i class="fa fa-dizzy text-light"></i></h1>
     </div>
     <div class="d-flex mt-3 justify-content-center text-light">
-      <h4>{{ message }}</h4>
+      <h4 id="message">{{ message }}</h4>
     </div>
   </div>
 </template>
