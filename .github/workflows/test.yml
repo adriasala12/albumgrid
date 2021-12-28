@@ -1,0 +1,22 @@
+name: Test
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Move to the server folder and run unit tests
+        run: |
+          cd server
+          yarn
+          yarn jest
+
+      - name: Move to the frontend folder and run unit tests
+        run: |
+          cd ../frontend
+          yarn
+          yarn jest
