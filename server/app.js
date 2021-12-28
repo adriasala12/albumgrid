@@ -1,45 +1,22 @@
-import express from 'express';
-import config from './config.js';
-import fetch from 'node-fetch';
+import express from "express";
+import config from "./config.js";
+import { getAlbums } from "./helpers.js";
 
 // Express.js instance setup
 const app = express();
 
+// Allow CORS from frontend
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-    next();
-})
+  res.header("Access-Control-Allow-Origin", config.frontendOrigin);
+  next();
+});
 
+// /GET Albums for artist
 app.get("/:artist", async (req, res) => {
-    var albums = await getAlbums(req.params.artist);
-    res.json(albums)
-})
+  var albums = await getAlbums(req.params.artist);
+  res.json(albums);
+});
 
-app.listen(config.app.port, () => {
-    console.log(`Server setup at http://localhost:${config.app.port}`)
-})
-
-async function getAlbums(artist) {
-    let response = await fetch(`https://itunes.apple.com/search?term=${artist}&entity=album&attribute=allArtistTerm`)
-    let data = await response.json();
-    let results = data.results;
-    
-    let sorted = results.sort((a, b) => { 
-        a = a.collectionName.toUpperCase();
-        b = b.collectionName.toUpperCase();
-
-        if (a > b) {
-            return 1;
-        }
-        if (a < b) {
-            return -1;
-        }
-        return 0;
-    })
-
-    let unique = sorted.filter((album, index, arr) => {
-        return !index || album.collectionName != sorted[index-1].collectionName
-    })
-    
-    return unique;
-}
+app.listen(config.port, () => {
+  console.log(`Server setup at http://localhost:${config.port}`);
+});

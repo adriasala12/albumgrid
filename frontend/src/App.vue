@@ -75,7 +75,7 @@
 
       <div v-if="albums.length" class="container">
         <div class="row justify-content-end my-4">
-          <div class="col-5">
+          <div class="col-md-6">
             <div class="input-group">
               <input
                 class="form-control round"
@@ -109,6 +109,7 @@
             class="card my-2 mx-2"
             v-for="album in showAlbums"
             :key="album.collectionName"
+            :id="'album-'+album.collectionName"
             style="width: 18rem"
           >
             <img

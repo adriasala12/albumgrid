@@ -1,9 +1,7 @@
 // Server-side configuration
 const config = {
-    app: {
-        port: 3000
-    }
+  port: 3000,
+  frontendOrigin: "http://localhost:8080",
 };
-
 
 export default config;
