@@ -4,19 +4,11 @@
     <nav class="navbar static-top navbar-dark bg-dark">
       <div class="mx-auto">
         <span class="navbar-brand align-bottom">
-          <span class="px-2 text-light align-text-bottom"
-            ><b-icon-grid3x3-gap-fill></b-icon-grid3x3-gap-fill
-          ></span>
-          <span class="px-2 text-light align-text-bottom"
-            ><b-icon-music-note></b-icon-music-note
-          ></span>
+          <i class="px-2 fa fa-th text-light"></i>
+          <i class="px-2 fa fa-music text-light"></i>
           Album Grid
-          <span class="px-2 text-light align-text-bottom"
-            ><b-icon-music-note></b-icon-music-note
-          ></span>
-          <span class="px-2 text-light align-text-bottom"
-            ><b-icon-grid3x3-gap-fill></b-icon-grid3x3-gap-fill
-          ></span>
+          <i class="px-2 fa fa-music text-light"></i>
+          <i class="px-2 fa fa-th text-light"></i>
         </span>
       </div>
     </nav>
@@ -90,7 +82,7 @@
                 style="margin-left: -40px; z-index: 100"
                 v-on:click="clearFilter"
               >
-                <b-icon-x-circle-fill></b-icon-x-circle-fill>
+                <i class="fa fa-times-circle"></i>
               </button>
             </div>
           </div>
