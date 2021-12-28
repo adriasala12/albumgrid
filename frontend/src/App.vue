@@ -23,6 +23,7 @@
       <div class="row mt-4">
         <div class="col">
           <input
+            id="search-field"
             class="form-control"
             type="text"
             placeholder="Search by artist name"

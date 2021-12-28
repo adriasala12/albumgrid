@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import AlbumCard from "@/components/AlbumCard.vue";
 
 const mockData = {
@@ -9,7 +9,7 @@ const mockData = {
 
 describe("AlbumCard Unit Tests", () => {
   test("AlbumCard renders name", () => {
-    const wrapper = shallowMount(AlbumCard, {
+    const wrapper = mount(AlbumCard, {
       propsData: mockData,
     });
 
@@ -17,7 +17,7 @@ describe("AlbumCard Unit Tests", () => {
   });
 
   test("AlbumCard renders artist", () => {
-    const wrapper = shallowMount(AlbumCard, {
+    const wrapper = mount(AlbumCard, {
       propsData: mockData,
     });
 
@@ -25,7 +25,7 @@ describe("AlbumCard Unit Tests", () => {
   });
 
   test("AlbumCard renders name", () => {
-    const wrapper = shallowMount(AlbumCard, {
+    const wrapper = mount(AlbumCard, {
       propsData: mockData,
     });
 
