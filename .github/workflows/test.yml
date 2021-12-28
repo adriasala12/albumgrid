@@ -17,6 +17,6 @@ jobs:
 
       - name: Move to the frontend folder and run unit tests
         run: |
-          cd ../frontend
+          cd frontend
           yarn
           yarn test
