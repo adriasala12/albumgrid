@@ -13,10 +13,10 @@ jobs:
         run: |
           cd server
           yarn
-          yarn test
+          yarn test --verbose
 
       - name: Move to the frontend folder and run unit tests
         run: |
           cd frontend
           yarn
-          yarn test
+          yarn test --verbose
