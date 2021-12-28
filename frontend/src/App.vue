@@ -82,7 +82,6 @@
                 type="text"
                 placeholder="Filter by album name"
                 v-model="filterTerm"
-                v-on:keyup="filterAlbums"
               />
 
               <button
@@ -105,25 +104,13 @@
         </div>
 
         <div class="row justify-content-center justify-content-md-between">
-          <div
-            class="card my-2 mx-2"
+          <AlbumCard
             v-for="album in showAlbums"
             :key="album.collectionName"
-            :id="'album-'+album.collectionName"
-            style="width: 18rem"
-          >
-            <img
-              class="card-img-top"
-              :src="album.artworkUrl100"
-              alt="Album cover image"
-            />
-            <div class="card-body">
-              <p class="card-title">{{ album.collectionName }}</p>
-              <p class="card-text">
-                <small class="text-muted">{{ album.artistName }}</small>
-              </p>
-            </div>
-          </div>
+            v-bind:albumName="album.collectionName"
+            v-bind:artistName="album.artistName"
+            v-bind:imageUrl="album.artworkUrl100"
+          ></AlbumCard>
         </div>
       </div>
     </section>
@@ -132,6 +119,7 @@
 
 <script>
 import axios from "axios";
+import AlbumCard from "./components/AlbumCard.vue";
 
 export default {
   name: "App",
@@ -139,7 +127,6 @@ export default {
     return {
       loading: false,
       albums: [],
-      showAlbums: [],
       searchTerm: "",
       filterTerm: "",
       showEmpty: false,
@@ -147,6 +134,7 @@ export default {
   },
   methods: {
     getAlbums: async function () {
+      this.clearFilter();
       if (this.searchTerm !== "") {
         this.loading = true;
         axios
@@ -154,7 +142,7 @@ export default {
           .then((response) => {
             if (response.data.length === 0) {
               this.loading = false;
-              this.albums = this.showAlbums = [];
+              this.albums = [];
               this.showEmpty = true;
               return;
             } else {
@@ -166,27 +154,33 @@ export default {
                     "300x300"
                   ))
               );
-              this.albums = this.showAlbums = response.data;
+              this.albums = response.data;
               this.loading = false;
             }
           })
           .catch((err) => console.log(err));
+      } else {
+        this.albums = [];
       }
-      else {
-        this.albums = this.showAlbums = []; 
-      }
-    },
-    filterAlbums: function () {
-      this.showAlbums = this.albums.filter((x) =>
-        x.collectionName.toLowerCase().includes(this.filterTerm.toLowerCase())
-      );
     },
     clearFilter: function () {
       this.filterTerm = "";
-      this.showAlbums = this.albums;
     },
   },
-  components: {},
+  components: {
+    AlbumCard,
+  },
+  computed: {
+    showAlbums() {
+      if (!this.filterTerm) {
+        return this.albums;
+      } else {
+        return this.albums.filter((x) =>
+          x.collectionName.toLowerCase().includes(this.filterTerm.toLowerCase())
+        );
+      }
+    },
+  },
 };
 </script>
 
