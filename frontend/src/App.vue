@@ -1,5 +1,5 @@
 <template>
-  <div class="fill">
+  <div>
     <!-- NAVBAR -->
     <nav class="navbar static-top navbar-dark" style="background: black">
       <div class="mx-auto">
@@ -51,7 +51,6 @@
 
     <!-- RESULTS SECTION -->
     <section id="results" class="mt-5">
-      
       <!-- Loading indicator -->
       <div v-if="loading" class="d-flex justify-content-center">
         <div class="spinner-border text-light" role="status"></div>
@@ -103,7 +102,40 @@
           ></AlbumCard>
         </div>
       </div>
+
+      <div class="container">
+        <div class="d-flex row justify-content-between">
+          <button
+            class="col-2 mt-5 mb-2 btn btn-light"
+            v-bind:disabled="page===1"
+            v-if="showAlbums.length"
+            @click="page--"
+          >
+            Previous
+          </button>
+          <button
+            class="col-2 mt-5 mb-2 btn btn-light"
+            v-bind:disabled="isLastPage"
+            v-if="showAlbums.length"
+            @click="page++"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </section>
+
+    <footer
+      v-bind:class="{
+        'sticky-bottom': showAlbums.length,
+        'fixed-bottom': !showAlbums.length,
+      }"
+      class="container"
+    >
+      <div class="my-3 d-flex text-muted">
+        <small class="mx-auto">Made by @adriasala12</small>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -111,6 +143,8 @@
 import axios from "axios";
 import AlbumCard from "./components/AlbumCard.vue";
 import EmptyState from "./components/EmptyState.vue";
+
+const itemsPerPage = 10;
 
 export default {
   name: "App",
@@ -121,6 +155,7 @@ export default {
       searchTerm: "",
       filterTerm: "",
       showEmpty: false,
+      page: 1,
     };
   },
   methods: {
@@ -162,7 +197,8 @@ export default {
     EmptyState,
   },
   computed: {
-    showAlbums() {
+    filteredAlbums() {
+      this.page = 1;
       if (!this.filterTerm) {
         return this.albums;
       } else {
@@ -171,7 +207,13 @@ export default {
         );
       }
     },
-  },
+    showAlbums() {
+      return this.filteredAlbums.slice((this.page-1)*itemsPerPage, this.page*itemsPerPage);
+    },
+    isLastPage() {
+      return this.page >= ((this.filteredAlbums.length+1)/itemsPerPage);
+    }
+  }
 };
 </script>
 
