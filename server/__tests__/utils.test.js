@@ -1,4 +1,4 @@
-import { sortUniqueAlbums } from "../helpers.js";
+import { sortUniqueAlbums } from "../utils/sort.unique.albums.js";
 
 test("sorts album array and removes duplicates", () => {
   const testData = [

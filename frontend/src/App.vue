@@ -165,7 +165,7 @@ export default {
       if (this.searchTerm !== "") {
         this.loading = true;
         axios
-          .get(`http://localhost:3000/${this.searchTerm.replace(" ", "+")}`)
+          .get(`http://localhost:3000/api/albums/${this.searchTerm.replace(" ", "+")}`)
           .then((response) => {
             if (response.data.length === 0) {
               this.loading = false;
